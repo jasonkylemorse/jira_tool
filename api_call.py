@@ -7,7 +7,8 @@ import requests
 # Config vars
 target = "http://pvjira01.pv.local:8080"
 logfile = "api_call.log"
-statuses = ["Scheduled","In Progress","Code Review","Functional Review","Resolved","Closed"]
+# statuses = ["Scheduled","In Progress","Code Review","Functional Review","Resolved","Closed"]
+statuses = ["Scheduled",'In Progress","Code Review','Functional Review","Resolved","Closed']
 types = ["Bug","Task","Epic","Story"]
 days = 180
 start_day = -1
@@ -37,9 +38,9 @@ while loop_day > start_day - days:
 #         print(status)
         for type in types:
 #             print(type)
-            jql=' ' .join(['project=spui+AND+issueType="'+type+'"+and+status+was+"'+status+'"+ON+endofDay('+str(loop_day)+')'])
+            jql=' ' .join(['project=spui+AND+issueType="'+type+'"+and+status+was+in+("'+status+'")+ON+endofDay('+str(loop_day)+')'])
             run = ' ' .join([target+api_path+jql])
-    #          print(run)
+#             print(run)
             r = requests.get(run)
             total = r.json().get('total')
             print(day,"\t",status,"\t",type,"\t",total)
