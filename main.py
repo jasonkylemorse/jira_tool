@@ -25,14 +25,16 @@ args = parser.parse_args()
 
 if args.target:    
     target = str(args.target)
+    
+print("Day", "\t", "Status", "\t", "Type", "\t", "Priority", "\t", "Total")  # Print a tab seperated list of results
 loop_day = start_day  # Initialise the Loop
 while loop_day > start_day - days:
     day = datetime.date.fromordinal(datetime.date.today().toordinal() + loop_day)  # Get the Day the request is for
     eod = str(loop_day)
-    print(day,eod)
     for status in statuses:  # Loop through Statuses provided
         for type in types:  # Loop through the Types provided
             for priority in priorities:
                 total = call.search(target, api_path, project, type, priority, status, eod)
+                
                 print(day, "\t", status, "\t", type, "\t", priority, "\t", total)  # Print a tab seperated list of results
     loop_day -= 1  # Increment the loop, we are going back in time so -1
